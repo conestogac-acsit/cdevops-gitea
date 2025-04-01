@@ -1,0 +1,87 @@
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: gitea-ngrok
+#   namespace: default
+# spec:
+#   type: ClusterIP
+#   ports:
+#     - port: 80
+#       targetPort: 3000
+#   selector:
+#     app: gitea
+# ---
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: gitea-ngrok
+#   namespace: default
+# spec:
+#   selector:
+#     matchLabels:
+#       app: gitea-ngrok
+#   template:
+#     metadata:
+#       labels:
+#         app: gitea-ngrok
+#     spec:
+#       containers:
+#         - name: ngrok
+#           image: wernight/ngrok
+#           args: ["http", "gitea-http.default.svc.cluster.local:8000", "--log=stdout"]
+
+
+
+
+---
+- name: Expose Gitea via Ngrok
+  hosts: localhost
+  tasks:
+    - name: Ensure Ngrok is installed
+      command: which ngrok
+      register: ngrok_installed
+      ignore_errors: true
+
+    - name: Download and install Ngrok if not present
+      when: ngrok_installed.rc != 0
+      block:
+        - name: Download Ngrok
+          get_url:
+            url: "https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-stable-linux-amd64.zip"
+            dest: "/tmp/ngrok.zip"
+
+        - name: Unzip Ngrok
+          unarchive:
+            src: "/tmp/ngrok.zip"
+            dest: "/usr/local/bin/"
+            remote_src: yes
+
+        - name: Verify Ngrok Installation
+          command: ngrok version
+
+    - name: Authenticate Ngrok using your Ngrok Auth Token
+      command: ngrok authtoken 2v3sv03a378MNYN7YhaQsaD6N0m_78whPvNnVH6TeYkPcG2EQ
+      when: ngrok_installed.rc == 0
+
+    - name: Start Ngrok Tunnel for Gitea
+      command: ngrok http gitea-http.default.svc.cluster.local:3000 --log=stdout
+      async: 3600
+      poll: 0
+      register: ngrok_output
+
+    - name: Wait for Ngrok to start and capture output
+      async_status:
+        jid: "{{ ngrok_output.ansible_job_id }}"
+      register: ngrok_status
+      retries: 10
+      delay: 10
+      until: ngrok_status.finished
+
+    - name: Display Ngrok Tunnel Instructions
+      debug:
+        msg: |
+          Ngrok is running! Check the terminal for the public URL.
+          Alternatively, visit: http://localhost:4040/status to see the active tunnel.
+          Ngrok URL: "{{ ngrok_status.results[0].stdout | regex_search('http://[^\s]+') }}"
+
+
