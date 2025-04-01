@@ -1,0 +1,32 @@
+gitea:
+  admin:
+    username: "admin"
+    password: "SuperSecurePassword"
+    email: "admin@example.com"
+
+  database:
+    type: "mysql"
+    host: "mysql.default.svc.cluster.local:3306"
+    name: "gitea"
+    user: "root"
+    password: "MyNewSecurePassword"
+
+  persistence:
+    enabled: true
+    size: 10Gi
+
+service:
+  http:
+    type: ClusterIP
+
+ngrok:
+  enabled: true
+  authToken: "2v3sv03a378MNYN7YhaQsaD6N0m_78whPvNnVH6TeYkPcG2EQ"
+
+resources:
+  limits:
+    memory: "512Mi"
+  requests:
+    memory: "256Mi"
+
+
