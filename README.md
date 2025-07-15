@@ -17,7 +17,7 @@ kubectl port-forward svc/gitea-http 3000:3000
 
 Now you should be able to access gitea in development mode.
 
-The challenge is to run this in production mode from a prod folder at the same level as the dev folder with it's own up, down and values.yaml.
+The challenge is to run this in production mode.
 
 ### Points to Cover
 
