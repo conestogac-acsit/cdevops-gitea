@@ -28,6 +28,6 @@ The challenge is to run this in production mode from a prod folder at the same l
 |use [the gitea helm](https://gitea.com/gitea/helm-gitea) to make the repository data persistent|3|
 |make gitea use external database|3|
 |Use [this article](https://blog.techiescamp.com/using-ngrok-with-kubernetes/) to expose your gitea instance publically|2|
-|make the README easy to use and ACCURATE|1|
+|make the README easy to use and ACCURATE|2|
 |||
 |total|10|
