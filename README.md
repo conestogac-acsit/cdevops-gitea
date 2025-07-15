@@ -4,7 +4,8 @@ k8s gitea lab to take dev (sqlite based) to prod (mysql based)
 TLDR;
 
 ```bash
-cd dev && ansible-playbook up.yaml
+pip install ansible kubernetes
+ansible-playbook up.yaml
 ```
 
 If that fails you may need some pre-requisites
