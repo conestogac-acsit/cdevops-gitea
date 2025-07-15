@@ -1,6 +1,5 @@
 {
     // ...
-    "build": { "dockerfile": "Dockerfile" },
     "overrideCommand": true,
     "runArgs": [
         "--cap-add=SYS_PTRACE",
@@ -10,9 +9,6 @@
     "containerEnv": {
 		"K8S": "k3d"
 	},
-    "features": {
-        "ghcr.io/devcontainers/features/docker-in-docker:2": {}
-    },
     "customizations": {
         "vscode": {
             "extensions": [
