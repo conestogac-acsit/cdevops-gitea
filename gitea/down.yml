@@ -7,7 +7,3 @@
       release_namespace: default
       state: absent
       wait: true
-  - name: "remove kubernetes python package"
-    pip:
-      name: kubernetes
-      state: absent

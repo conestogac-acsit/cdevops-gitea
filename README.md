@@ -5,7 +5,13 @@ TLDR;
 
 ```bash
 pip install ansible kubernetes
-ansible-playbook up.yaml
+git submodule update --init --recursive
+ansible-playbook up.yml
+```
+
+Wait until `kubectl get pod` shows all pods running and:
+
+```bash
 kubectl port-forward svc/gitea-http 3000:3000
 ```
 
@@ -19,8 +25,9 @@ The challenge is to run this in production mode from a prod folder at the same l
 
 |Item|Out Of|
 |--|--:|
-|use [the gitea helm](https://gitea.com/gitea/helm-gitea) to make the repository data persistent|4|
-|make gitea use external database|4|
+|use [the gitea helm](https://gitea.com/gitea/helm-gitea) to make the repository data persistent|3|
+|make gitea use external database|3|
 |Use [this article](https://blog.techiescamp.com/using-ngrok-with-kubernetes/) to expose your gitea instance publically|2|
+|make the README easy to use and ACCURATE|1|
 |||
 |total|10|
