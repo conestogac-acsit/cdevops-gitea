@@ -26,8 +26,8 @@ The challenge is to run this in production mode.
 |Item|Out Of|
 |--|--:|
 |use [the gitea helm](https://gitea.com/gitea/helm-gitea) to make the repository data persistent|3|
-|make gitea use external database|3|
-|Expose your gitea instance publically|2|
-|make the README easy to use and ACCURATE|2|
+|make gitea use external database|1|
+|Expose your gitea instance publically|3|
+|make the README easy to use and ACCURATE|3|
 |||
 |total|10|
